@@ -1,21 +1,16 @@
-# fly.toml app configuration file generated for onlinenotepad-secsync-late-butterfly-7641 on 2025-02-27T14:53:35+02:00
+# fly.toml app configuration file generated for onlinenotepad-secsync on 2025-02-27T15:06:19+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'onlinenotepad-secsync-late-butterfly-7641'
+app = 'onlinenotepad-secsync'
 primary_region = 'ams'
 swap_size_mb = 2048
 
 [build]
-  dockerfile = 'Dockerfile'
-
-[deploy]
-  release_command = 'npm run prisma:prod:migrate'
 
 [env]
   PORT = '8080'
-  secrets = 'map[DATABASE_URL:DATABASE_URL]'
 
 [http_service]
   internal_port = 8080
