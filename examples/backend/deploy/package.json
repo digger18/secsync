@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^20.13.0",
+    "@types/uuid": "^9.0.8",
+    "@types/ws": "^8.5.10",
+    "@vercel/ncc": "^0.38.1",
+    "prettier": "^3.2.5",
+    "prisma": "^5.22.0",
+    "ts-node": "10.9.2",
+    "ts-node-dev": "^2.0.0"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --no-notify ./src/index.ts",
+    "prisma:prod:migrate": "npm install -g prisma@5 && DATABASE_URL=$DATABASE_URL prisma migrate deploy",
+    "prisma:prod:generate": "DATABASE_URL=$DATABASE_URL prisma generate",
+    "prisma:prod:studio": "DATABASE_URL=$DATABASE_URL prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "libsodium-wrappers": "^0.7.13",
+    "make-promises-safe": "^5.1.0",
+    "secsync": "^0.5.0",
+    "secsync-server": "^0.5.0",
+    "uuid": "^9.0.1",
+    "ws": "^8.17.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

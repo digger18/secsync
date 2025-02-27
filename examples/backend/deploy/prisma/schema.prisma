@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["linux-musl-openssl-3.0.x", "native"]
+  output        = "./generated/output"
+}
+
+model Document {
+  id               String     @id
+  activeSnapshot   Snapshot?  @relation(name: "activeSnapshot", fields: [activeSnapshotId], references: [id])
+  activeSnapshotId String?    @unique
+  snapshots        Snapshot[]
+  createdAt        DateTime   @default(now())
+}
+
+model Snapshot {
+  id                         String    @id
+  latestVersion              Int
+  data                       String
+  ciphertextHash             String
+  document                   Document  @relation(fields: [documentId], references: [id])
+  documentId                 String
+  updates                    Update[]
+  activeSnapshotDocument     Document? @relation("activeSnapshot")
+  createdAt                  DateTime  @default(now())
+  clocks                     Json
+  parentSnapshotUpdateClocks Json
+  parentSnapshotProof        String
+}
+
+model Update {
+  id         String   @unique // composed out of snapshotId, pubKey, clock
+  version    Int
+  data       String
+  snapshot   Snapshot @relation(fields: [snapshotId], references: [id])
+  snapshotId String
+  clock      Int
+  pubKey     String
+
+  @@unique([snapshotId, version])
+  @@unique([snapshotId, pubKey, clock]) // matches the id
+  @@index([id, version])
+}

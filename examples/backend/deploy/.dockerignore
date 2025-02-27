@@ -1,0 +1,5 @@
+npm-debug.log
+.env
+Dockerfile
+node_modules
+fly.toml
